@@ -1,0 +1,16 @@
+.form-container {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 40px;
+}
+
+.form-container_input {
+    margin: 4px;
+}
+
+.form-container_button {
+    grid-column: 2/3;
+    justify-self: center;
+    align-self: center;
+}

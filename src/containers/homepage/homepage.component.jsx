@@ -7,8 +7,8 @@ import './homepage.styles.scss';
 
 const Homepage = () => (
     <div className='homepage-container'>
-        <HomePageForm />
-        <HomepageInfo />
+        <HomePageForm  />
+        <HomepageInfo  />
     </div>
 );
 

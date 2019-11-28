@@ -13,7 +13,7 @@ const Header = (currentUser) => (
         <div className='options'>
             { currentUser ? (
                 <div>
-                    <div className='option'>Twoje zamówienie</div>
+                    <div className='option'>Twoje zamówienia</div>
                     <div className='option'>Wyloguj</div>
                 </div>
             ) : (
