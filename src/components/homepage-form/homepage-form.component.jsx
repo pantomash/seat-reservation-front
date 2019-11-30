@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
 
 import DateFnsUtils from "@date-io/date-fns";
 import plLocale from 'date-fns/locale/pl';
-// import { DateTimePicker } from "@material-ui/pickers";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import {
   InputLabel,
   FormControl,
@@ -11,52 +11,47 @@ import {
   Button,
   Select
 } from "@material-ui/core";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import Select from "@material-ui/core/Select";
-// import { makeStyles } from "@material-ui/core/styles";
-// import FormControl from "@material-ui/core/FormControl";
-// import MenuItem from "@material-ui/core/MenuItem";
-// import Button from '@material-ui/core/Button';
 
 import './homepage-form.styles.scss';
 
-// const useStyles = makeStyles(theme => ({
-//   formControl: {
-//     // margin: theme.spacing(1),
-//     minWidth: 120
-//   },
-//   selectEmpty: {
-//     marginTop: theme.spacing(2)
-//   }
-// }));
+class HomePageForm extends Component {
+  state = {
+      date: null,
+      hour: '',
+      city: '',
+      people: ''
+  }
 
-const HomePageForm = () => {
-  // const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedCity, setCity] = useState('');
-  const [selectedPeople, setPeople] = useState('');
+  handleDateChange = event => {
+    this.setState({ date: event });
+  }
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
+  handleHourChange = event => {
+    this.setState({ hour: event.target.value });
+  }
 
-  const handleCityChange = event => {
-    setCity(event.target.value);
-  };
+  handleCityChange = event => {
+    this.setState({ city: event.target.value });
+  }
 
-  const handlePeopleChange = event => {
-    setPeople(event.target.value);
-  };
+  handlePeopleChange = event => {
+    this.setState({ people: event.target.value });
+  }
 
-  return (
-    <div className="form-container">
+  onButtonSubmit = () => {
+    this.props.history.push({pathname: '/checkout', state: {dto: {date: this.state.date, hour: this.state.hour, city: this.state.city, people: this.state.people}}});
+  }
+
+  render(){
+    return (
+      <div className="form-container">
       <FormControl className='form-container_input'>
         <InputLabel id="city-label">Wybierz miasto</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={selectedCity}
-          onChange={handleCityChange}
+          value={this.state.city}
+          onChange={this.handleCityChange}
         >
           <MenuItem value={1}>Trójmiasto</MenuItem>
           <MenuItem value={2}>Kraków</MenuItem>
@@ -64,25 +59,56 @@ const HomePageForm = () => {
         </Select>
       </FormControl>
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
-        <DateTimePicker
+        <DatePicker
           id="date-picker"
           label="Wybierz datę"
-          value={selectedDate}
-          // disabled={!selectedCity}
+          value={this.state.date}
           disablePast
-          onChange={handleDateChange}
-          ampm={false}
-          format="yyyy-MM-dd HH:mm"
+          onChange={this.handleDateChange}
+          format="yyyy-MM-dd"
         />
       </MuiPickersUtilsProvider>
+      <FormControl className='form-container_input'>
+        <InputLabel id="hour-label">Wybierz godzinę</InputLabel>
+        <Select
+          labelId="demo-hour-label"
+          id="demo-simple-select"
+          value={this.state.hour}
+          onChange={this.handleHourChange}
+        >
+          <MenuItem value={0}>0:00</MenuItem>
+          <MenuItem value={1}>1:00</MenuItem>
+          <MenuItem value={2}>2:00</MenuItem>
+          <MenuItem value={3}>3:00</MenuItem>
+          <MenuItem value={4}>4:00</MenuItem>
+          <MenuItem value={5}>5:00</MenuItem>
+          <MenuItem value={6}>6:00</MenuItem>
+          <MenuItem value={7}>7:00</MenuItem>
+          <MenuItem value={8}>8:00</MenuItem>
+          <MenuItem value={9}>9:00</MenuItem>
+          <MenuItem value={10}>10:00</MenuItem>
+          <MenuItem value={11}>11:00</MenuItem>
+          <MenuItem value={12}>12:00</MenuItem>
+          <MenuItem value={13}>13:00</MenuItem>
+          <MenuItem value={14}>14:00</MenuItem>
+          <MenuItem value={15}>15:00</MenuItem>
+          <MenuItem value={16}>16:00</MenuItem>
+          <MenuItem value={17}>17:00</MenuItem>
+          <MenuItem value={18}>18:00</MenuItem>
+          <MenuItem value={19}>19:00</MenuItem>
+          <MenuItem value={20}>20:00</MenuItem>
+          <MenuItem value={21}>21:00</MenuItem>
+          <MenuItem value={22}>22:00</MenuItem>
+          <MenuItem value={23}>23:00</MenuItem>
+        </Select>
+      </FormControl>
       <FormControl className='form-container_input'>
         <InputLabel id="people-label">Ile osób</InputLabel>
         <Select
           labelId="demo-people-label"
           id="demo-simple-select"
-          value={selectedPeople}
-          // disabled={!selectedCity}
-          onChange={handlePeopleChange}
+          value={this.state.people}
+          onChange={this.handlePeopleChange}
         >
           <MenuItem value={1}>1 osoba</MenuItem>
           <MenuItem value={2}>2 osoby</MenuItem>
@@ -102,14 +128,12 @@ const HomePageForm = () => {
       className="form-container_button"
         variant="contained"
         color="primary"
-        // disabled={!selectedPeople}
-        onClick={() => {
-          const formDTO = {city: selectedCity, people: selectedPeople, date: selectedDate};
-          console.log(formDTO);
-        }}
+        disabled={!this.state.hour || !this.state.people || !this.state.date || !this.state.city}
+        onClick={this.onButtonSubmit}
       >Szukaj</Button>
     </div>
-  );
-};
+    );
+  }
+}
 
-export default HomePageForm;
+export default withRouter(HomePageForm);
