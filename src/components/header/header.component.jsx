@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 
@@ -6,10 +7,9 @@ import './header.styles.scss';
 
 const Header = (currentUser) => (
     <div className='header'>
-        {/* <Logo /> */}
-        <div className='logo-container'>
+        <Link className='logo-container' to='/'>
             <img src={logo} alt="" className='logo' />
-        </div>
+        </Link>
         <div className='options'>
             { currentUser ? (
                 <div>
@@ -21,7 +21,6 @@ const Header = (currentUser) => (
                     <div className='option'>Zaloguj</div>
                     <div className='option'>Zarejestruj</div>
                 </div>
-                
             )}
         </div>
     </div>
