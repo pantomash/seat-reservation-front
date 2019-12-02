@@ -125,7 +125,7 @@ class HomePageForm extends Component {
         </Select>
       </FormControl>
       <Button 
-      className="form-container_button"
+        className="form-container_button"
         variant="contained"
         color="primary"
         disabled={!this.state.hour || !this.state.people || !this.state.date || !this.state.city}

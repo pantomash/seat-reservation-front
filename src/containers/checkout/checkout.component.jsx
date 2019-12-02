@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+
 import RESTAURANT_DATA from './restaurant.data.js'
 
 class Checkout extends Component {
@@ -20,8 +22,8 @@ class Checkout extends Component {
 
         return(
             <div className='content'>
-                {collection.map(({ id, ...otherCollectionProps }) => (
-                    <RestaurantItem key={id} {...otherCollectionProps} />
+                {collection.map(item => (
+                    <CheckoutItem key={item.id} item={item} />
                 ))}
             </div>
         );
